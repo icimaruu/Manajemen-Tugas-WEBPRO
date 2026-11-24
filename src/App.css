@@ -1,160 +1,886 @@
-/* Reset & Pengaturan Dasar */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* ==========================================================
+   TASKFLOW - SISTEM MANAJEMEN TUGAS KULIAH
+   Stylesheet Utama (Sesuai Desain & Palet Warna W4)
+   ========================================================== */
+
+:root {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-subtle: #eef2ff;
+  --secondary-color: #0ea5e9;
+  --success-color: #10b981;
+  --success-subtle: #ecfdf5;
+  --warning-color: #f59e0b;
+  --warning-subtle: #fffbeb;
+  --danger-color: #ef4444;
+  --danger-subtle: #fef2f2;
+  --dark-text: #1e293b;
+  --muted-text: #64748b;
+  --card-bg: #ffffff;
+  --border-color: #e2e8f0;
+  --bg-app: #f8fafc;
 }
 
-body {
-  background-color: #f4f6f9;
-  font-family: Arial, sans-serif;
-  color: #333;
-}
-
-/* Wadah Utama Aplikasi */
-.app-container {
-  max-width: 550px;
-  margin: 40px auto;
-  padding: 24px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* 1. Header */
-.header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.header-title {
-  font-size: 24px;
-  font-weight: bold;
-  color: #2c3e50;
-  margin-bottom: 6px;
-}
-
-.header-subtitle {
-  font-size: 14px;
-  color: #7f8c8d;
-}
-
-/* 2. Ringkasan Tugas */
-.summary-box {
-  background-color: #eef2f5;
-  padding: 12px 16px;
-  border-radius: 6px;
-  margin-bottom: 20px;
-  font-size: 14px;
-  color: #333;
-}
-
-/* 3. Form Tambah Tugas */
-.task-form {
+/* Base Layout */
+.app-wrapper {
   display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-app);
+  color: var(--dark-text);
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
-.input-text {
-  flex: 1;
-  padding: 10px 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
+.app-container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1.25rem 3rem 1.25rem;
+  flex: 1 0 auto;
 }
 
-.select-priority {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-  background-color: white;
+/* ==========================================================
+   1. KOMPONEN HEADER & NAVBAR
+   ========================================================== */
+.app-header {
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 2rem;
 }
 
-.btn-add {
-  padding: 10px 18px;
-  background-color: #0d6efd;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.btn-add:hover {
-  background-color: #0b5ed7;
-}
-
-/* 4. Kartu Item Tugas */
-.task-item {
+.header-navbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: 6px;
-  margin-bottom: 10px;
+  gap: 1rem;
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-icon {
+  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 8px -1px rgba(79, 70, 229, 0.3);
+}
+
+.brand-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.2;
+}
+
+.brand-tagline {
+  font-size: 0.75rem;
+  color: var(--muted-text);
+  display: block;
+  font-weight: 500;
+}
+
+.user-profile-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background-color: #f1f5f9;
+  padding: 0.4rem 0.85rem;
+  border-radius: 30px;
+  border: 1px solid var(--border-color);
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-size: 0.825rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.user-role {
+  font-size: 0.7rem;
+  color: var(--muted-text);
+}
+
+/* Hero Banner */
+.hero-banner {
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 50%, #06b6d4 100%);
+  color: #ffffff;
+  padding: 2.25rem 1.25rem;
+  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.25);
+}
+
+.hero-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  padding: 0.35rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.hero-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  font-size: 0.95rem;
+  opacity: 0.92;
+  max-width: 680px;
+  line-height: 1.5;
+}
+
+/* ==========================================================
+   2. KOMPONEN RINGKASAN TUGAS (STATISTIK)
+   ========================================================== */
+.summary-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.summary-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.06);
+}
+
+.stat-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.bg-indigo {
+  background-color: #eef2ff;
+  color: #4f46e5;
+}
+
+.bg-blue {
+  background-color: #e0f2fe;
+  color: #0284c7;
+}
+
+.bg-green {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.bg-amber {
+  background-color: #fffbeb;
+  color: #d97706;
+}
+
+.stat-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 0.775rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted-text);
+  margin-bottom: 0.2rem;
+}
+
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.1;
+}
+
+.stat-hint {
+  font-size: 0.75rem;
+  color: var(--muted-text);
+  margin-top: 0.15rem;
+}
+
+/* ==========================================================
+   3. GRID KONTEN UTAMA (FORM & LIST)
+   ========================================================== */
+.app-content-grid {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 960px) {
+  .app-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================
+   4. KOMPONEN FORM TAMBAH TUGAS (CONTROLLED COMPONENT)
+   ========================================================== */
+.form-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.35rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.form-card-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-header-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.form-header-title i {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin-top: 2px;
+}
+
+.form-header-title h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.2rem;
+}
+
+.form-header-title p {
+  font-size: 0.775rem;
+  color: var(--muted-text);
+  line-height: 1.3;
+}
+
+.alert-error {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.825rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.task-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.95rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.35rem;
+}
+
+.text-danger {
+  color: #ef4444;
+}
+
+.form-control,
+.form-select {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: #1e293b;
+  background-color: #ffffff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.btn-primary-action {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.25);
+}
+
+.btn-primary-action:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-primary-action:active {
+  transform: translateY(1px);
+}
+
+/* ==========================================================
+   5. KOMPONEN DAFTAR TUGAS (TOOLBAR & TABS)
+   ========================================================== */
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.list-header {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.list-title-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.list-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+}
+
+.badge-count {
+  font-size: 0.775rem;
+  font-weight: 600;
+  background-color: #f1f5f9;
+  color: var(--muted-text);
+  padding: 0.3rem 0.65rem;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+}
+
+.list-toolbar {
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 640px) {
+  .list-toolbar {
+    grid-template-columns: 1fr;
+  }
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.85rem;
+  color: #94a3b8;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.6rem 2.2rem 0.6rem 2.4rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: #1e293b;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+.clear-search-btn {
+  position: absolute;
+  right: 0.65rem;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0.2rem;
+  font-size: 0.95rem;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  color: #1e293b;
   background-color: #ffffff;
 }
 
-.task-item.completed {
-  background-color: #f8f9fa;
+.status-tabs {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 0.85rem;
 }
 
-.task-title {
+.tab-btn {
+  background: none;
+  border: 1px solid var(--border-color);
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: #212529;
+  color: var(--muted-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
-.task-title.done {
-  text-decoration: line-through;
-  color: #6c757d;
+.tab-btn:hover {
+  background-color: #f1f5f9;
+  color: var(--dark-text);
+}
+
+.tab-btn.active {
+  background-color: #eef2ff;
+  border-color: #c7d2fe;
+  color: var(--primary-color);
+}
+
+.tab-pill {
+  font-size: 0.7rem;
+  background-color: rgba(0, 0, 0, 0.08);
+  padding: 0.1rem 0.45rem;
+  border-radius: 10px;
+}
+
+.tab-btn.active .tab-pill {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+/* ==========================================================
+   6. KOMPONEN KARTU TUGAS (TASK CARD)
+   ========================================================== */
+.task-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.task-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px -2px rgba(0, 0, 0, 0.06);
+}
+
+.task-card.is-completed {
+  background-color: #fafbfc;
+  border-color: #d1fae5;
+  border-left: 4px solid var(--success-color);
+}
+
+.task-card-main {
+  flex: 1;
+}
+
+.task-meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.45rem;
+}
+
+.badge-course {
+  font-size: 0.725rem;
+  font-weight: 600;
+  background-color: #eef2ff;
+  color: #4f46e5;
+  border: 1px solid #e0e7ff;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+}
+
+.badge-category {
+  font-size: 0.725rem;
+  font-weight: 500;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
 }
 
 .badge-priority {
-  margin-left: 10px;
-  font-size: 11px;
-  background-color: #ffc107;
-  color: #000;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-weight: bold;
+  font-size: 0.725rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
 }
 
-/* Tombol Aksi */
-.btn-action-group {
+.badge-priority-high {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.badge-priority-medium {
+  background-color: #fef3c7;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.badge-priority-low {
+  background-color: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
+
+.task-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 0.35rem;
+  line-height: 1.35;
+}
+
+.task-title.title-done {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.task-desc {
+  font-size: 0.85rem;
+  color: #475569;
+  line-height: 1.45;
+  margin-bottom: 0.75rem;
+}
+
+.task-card-footer {
   display: flex;
-  gap: 6px;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
 }
 
-.btn-toggle {
-  padding: 6px 12px;
-  background-color: #e9ecef;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+.task-deadline {
+  font-size: 0.8rem;
+  color: var(--muted-text);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.badge-status {
+  font-size: 0.725rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.badge-status-completed {
+  background-color: #d1fae5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-status-progress {
+  background-color: #e0f2fe;
+  color: #0284c7;
+  border: 1px solid #bae6fd;
+}
+
+.badge-status-pending {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+}
+
+/* Aksi Kartu Tugas */
+.task-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+@media (max-width: 680px) {
+  .task-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .task-card-actions {
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+  }
+}
+
+.select-status-action {
+  padding: 0.35rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: inherit;
+  background-color: #ffffff;
+  color: #334155;
   cursor: pointer;
-  font-size: 13px;
 }
 
-.btn-delete {
-  padding: 6px 12px;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 4px;
+.btn-action-status {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid transparent;
   cursor: pointer;
-  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-.btn-delete:hover {
-  background-color: #bb2d3b;
+.btn-complete {
+  background-color: #ecfdf5;
+  color: #059669;
+  border-color: #a7f3d0;
 }
 
-/* 5. Teks Kosong (Conditional Rendering) */
-.empty-text {
+.btn-complete:hover {
+  background-color: #059669;
+  color: #ffffff;
+}
+
+.btn-reopen {
+  background-color: #f1f5f9;
+  color: #475569;
+  border-color: #cbd5e1;
+}
+
+.btn-reopen:hover {
+  background-color: #e2e8f0;
+}
+
+.btn-action-delete {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #fecaca;
+  background-color: #fef2f2;
+  color: #dc2626;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.2s ease;
+}
+
+.btn-action-delete:hover {
+  background-color: #dc2626;
+  color: #ffffff;
+}
+
+/* ==========================================================
+   7. KOTAK KOSONG (CONDITIONAL RENDERING)
+   ========================================================== */
+.empty-box {
+  background-color: var(--card-bg);
+  border: 2px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 3rem 1.5rem;
   text-align: center;
-  font-style: italic;
-  color: #6c757d;
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-icon {
+  font-size: 3rem;
+  color: #94a3b8;
+  margin-bottom: 0.75rem;
+}
+
+.empty-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 0.35rem;
+}
+
+.empty-subtext {
+  font-size: 0.85rem;
+  color: var(--muted-text);
+  max-width: 440px;
+  margin-bottom: 1.25rem;
+}
+
+.btn-reset-filter {
+  padding: 0.5rem 1.25rem;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* ==========================================================
+   8. FOOTER APLIKASI
+   ========================================================== */
+.app-footer {
+  background-color: #ffffff;
+  border-top: 1px solid var(--border-color);
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  margin-top: auto;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-main {
+  font-size: 0.875rem;
+  color: #334155;
+  margin-bottom: 0.3rem;
+}
+
+.footer-sub {
+  font-size: 0.775rem;
+  color: var(--muted-text);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
